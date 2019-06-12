@@ -1,0 +1,35 @@
+{
+  "name": "@rexlabs/stitch",
+  "version": "0.1.0",
+  "main": "app.js",
+  "description": "Stitch together JSON definitions",
+  "authors": [
+    {
+      "name": "Jean-Pierre Gassin",
+      "email": "jean-pierre.gassin@rexsoftware.com.au"
+    },
+    {
+      "name": "Lachlan Krautz",
+      "email": "lachlan.krautz@rexsoftware.com.au"
+    }
+  ],
+  "license": "MIT",
+  "repository": "git@github.com:rexlabsio/stitch.git",
+  "homepage": "https://github.com/rexlabsio/stitch",
+  "bin": {
+    "stitch": "bin/stitch"
+  },
+  "dependencies": {
+    "commander": "^2.19.0",
+    "fs-extra": "^7.0.0",
+    "lodash": "^4.17.11",
+    "package.json": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/fs-extra": "^5.0.4",
+    "@types/lodash": "^4.14.118",
+    "@types/node": "^10.12.10",
+    "prettier": "^1.14.3"
+  }
+}

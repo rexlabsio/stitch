@@ -1,0 +1,42 @@
+{
+  "name": "loop_example",
+  "first_step": "loop",
+  "description": "Make it loop",
+  "steps": [
+    {
+      "name": "loop",
+      "description": "Loop until I say to stop",
+      "type": "task",
+      "function": {
+        "format": "base64",
+        "code": "",
+        "modules": ["lodash"]
+      },
+      "shared": {
+        "should_loop": "$.state.steps.loop.LOOP_INDEX.result.output.should_loop"
+      },
+      "triggers": "check_loop"
+    },
+    {
+      "name": "check_loop",
+      "description": "Check if we should keep looping",
+      "type": "choice",
+      "branches": [
+        {
+          "comparison": {
+            "type": "boolean_equals",
+            "value": true
+          },
+          "variable": "$.state.shared.should_loop",
+          "triggers": "loop"
+        }
+      ],
+      "fallback": "complete"
+    },
+    {
+      "name": "complete",
+      "description": "Bring and end to this madness",
+      "type": "end"
+    }
+  ]
+}

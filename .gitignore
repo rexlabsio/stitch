@@ -75,5 +75,9 @@ typings/
 .serverless
 
 package-lock.json
+yarn.lock
 
 .env
+
+.idea
+gen

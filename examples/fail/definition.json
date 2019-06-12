@@ -1,0 +1,23 @@
+{
+  "name": "fail_example",
+  "first_step": "blow_up",
+  "description": "Terminates on first step",
+  "steps": [
+    {
+      "name": "blow_up",
+      "description": "run js that fails",
+      "type": "task",
+      "function": {
+        "format": "base64",
+        "code": "",
+        "modules": ["lodash"]
+      },
+      "triggers": "complete"
+    },
+    {
+      "name": "complete",
+      "description": "complete the workflow",
+      "type": "end"
+    }
+  ]
+}

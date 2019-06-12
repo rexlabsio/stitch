@@ -1,0 +1,21 @@
+{
+  "name": "workflow_template",
+  "first_step": "finish_workflow",
+  "description": "",
+  "preflight": {
+    "function": {
+      "format": "base64",
+      "code": "",
+      "data": {},
+      "modules": []
+    },
+    "error_message": "Pre-flight check failed"
+  },
+  "steps": [
+    {
+      "name": "finish_workflow",
+      "type": "end",
+      "description": "This step finishes the workflow"
+    }
+  ]
+}
