@@ -11,7 +11,6 @@ commander
   .description("Stitch em")
   .action(run.bind({}, commandStitch))
   .option("-i, --insomnia", "Escape for use in insomnia")
-  .option("-f, --file", "Write to file instead of printing to stdout")
   .arguments("<dir>");
 
 commander.parse(process.argv);
@@ -34,7 +33,6 @@ function run(action, ...args) {
  * @param {string} path
  * @param {Object} cmd
  * @param {undefined|Boolean} cmd.insomnia
- * @param {undefined|Boolean} cmd.file
  * @returns {Promise<void>}
  */
 async function commandStitch(path, cmd) {
