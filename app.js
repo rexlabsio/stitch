@@ -38,19 +38,9 @@ function run(action, ...args) {
  * @returns {Promise<void>}
  */
 async function commandStitch(path, cmd) {
-  const dirs = path
-    ? [path]
-    : await stitch.findDirsToStitch();
+  printer.insomnia = cmd.insomnia || false;
 
-  if (cmd.insomnia) {
-    printer.insomnia = true;
-  }
-
-  await Promise.all(
-    dirs.map(async dir => {
-      const definition = await stitch.createStitchedDefinition(dir);
-
-      printer.output(definition);
-    })
+  printer.output(
+    await stitch.createStitchedDefinition(path)
   );
 }
