@@ -7,11 +7,17 @@ const printer = require("./src/printer");
 
 commander.version(packageJson.version);
 
-commander
-  .description("Stitch em")
-  .action(run.bind({}, commandStitch))
-  .option("-i, --insomnia", "Escape for use in insomnia")
-  .arguments("<dir>");
+commander.command('import').
+    description('Import an already exported definition to be expanded').
+    action(run.bind({}, commandImport)).
+    arguments('<definition>').
+    arguments('<path>');
+
+commander.command('export').
+    description('Export a definition to be weaved together').
+    action(run.bind({}, commandExport)).
+    option('-i, --insomnia', 'Escape for use in insomnia').
+    arguments('<dir>');
 
 commander.parse(process.argv);
 
@@ -30,15 +36,24 @@ function run(action, ...args) {
 }
 
 /**
+ * @param {string} definition
+ * @param {string} path
+ * @returns {Promise<void>}
+ */
+async function commandImport(definition, path) {
+  await stitch.createExpandedDefinition(JSON.parse(definition), path);
+}
+
+/**
  * @param {string} path
  * @param {Object} cmd
  * @param {undefined|Boolean} cmd.insomnia
  * @returns {Promise<void>}
  */
-async function commandStitch(path, cmd) {
+async function commandExport(path, cmd) {
   printer.insomnia = cmd.insomnia || false;
 
   printer.output(
-    await stitch.createStitchedDefinition(path)
+      await stitch.createStitchedDefinition(path),
   );
 }

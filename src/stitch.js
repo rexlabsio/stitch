@@ -1,7 +1,67 @@
+const printer = require("./printer");
 const fs = require("fs-extra");
 const _ = require("lodash");
 
 module.exports = {
+  createExpandedDefinition: async function(definition, path) {
+    await this.expandDefinition(definition, path);
+  },
+
+  expandDefinition: async function(definition, path) {
+    await this.expandDefinitionResources(definition, path);
+  },
+
+  expandDefinitionResources: async function(definition, path) {
+    if (definition.preflight) {
+      await this.expandDefinitionResources(definition.preflight, path);
+    }
+    if (definition.required_input) {
+      await this.expandDefinitionResources(definition, path);
+    }
+
+    await Promise.all(
+        definition.steps.map(async step => {
+          return await this.expandNodeResources(step, path, step.name);
+        })
+    );
+
+    printer.write(path, "definition.json", printer.getText(definition));
+  },
+
+  expandNodeResources: async function(node, path, name) {
+    if (node) {
+      try {
+        printer.write(
+          `${path}/code`,
+          `${name || "preflight"}.js`,
+          new Buffer(node.function.code, 'base64')
+        );
+
+        _.set(node, "function.code", "");
+      } catch (err) {
+        // nada
+      }
+    }
+
+    const formDefinitionPath = "required_input.form.definition";
+    if (_.has(node, formDefinitionPath)) {
+      const formDefinition = _.get(node, formDefinitionPath);
+      if (!_.isEmpty(formDefinition)) {
+        try {
+          printer.write(
+            `${path}/forms`,
+            `${name || "initial"}.json`,
+            printer.getText(formDefinition)
+          );
+
+          _.set(node, formDefinitionPath, {});
+        } catch (err) {
+          // nada
+        }
+      }
+    }
+  },
+
   /**
    *
    * @param {String} dir
