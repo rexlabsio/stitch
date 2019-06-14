@@ -31,7 +31,7 @@ definition-folder
 |-- code
 |   |-- my_step.js
 |-- form
-    |-- definition.json
+    |-- my_step.json
 ```
 
 To take advantage of the base64 encoding component of `stitch`, you'll need to name your JavaScript files located inside 
@@ -70,17 +70,38 @@ module.exports = function(context) {
 ## Commands
 
 ```sh
-stitch path/to/directory
-
+Usage: stitch [options] [command]
+           
 Options:
-  -i, --insomnia  Escape for use in insomnia
-  -h, --help      output usage information
+  -h, --help                  output usage information
+                                                     
+Commands:
+  import <definition> <path>  Import an already exported definition to be expanded
+  export [options] <dir>      Export a definition to be weaved together
 ```
+
+#### Import
+
+Expands an existing definition and writes to the `destination`
+
+`stitch import "$(< file.json)" <destination>`
+
+
+#### Export
+
+Export a definition from the supplied `dir`
+
+`stitch export <dir>`
+
+---
 
 ### Examples
 
-#### Print to file
-`stitch path/to/directory > result.json`
+#### Export directory and print to file
+`stitch export path/to/directory > result.json`
 
-#### Copy to clipbaord (macOS)
-`stitch path/to/directory | pbcopy`
+#### Export directory and copy to clipboard (macOS)
+`stitch export path/to/directory | pbcopy`
+
+#### Import file from input
+`stitch import "$(< file.json)" <destination>`
