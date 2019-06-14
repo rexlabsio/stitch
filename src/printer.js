@@ -35,18 +35,19 @@ module.exports = {
    * Write to file
    *
    * @param {String} dir
-   * @param {Object} definition
+   * @param {String} fileName
+   * @param {Object} output
    * @returns {Promise<void>}
    */
-  write: async function(dir, definition) {
+  write: async function(dir, fileName, output) {
     // Ensure dir (ok if already exists)
     try {
-      await fs.mkdirp(`${process.cwd()}/gen/${dir}`);
+      await fs.mkdirp(dir);
     } catch (err) {
     }
 
     try {
-      await fs.writeFile(`${process.cwd()}/gen/${dir}/definition.json`, this.getText(definition), {
+      await fs.writeFile(`${dir}/${fileName}`, output, {
         flag: "w"
       });
     } catch (err) {
