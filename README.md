@@ -23,7 +23,7 @@ For environment requirements, see the `package.json`.
 The folder that contains your `definition.json` is the entry point for `stitch` to work out of.
 
 You *can* also have a `code` and `form` folder located in your entry point directory, this enables `stitch` to take 
-advantage of advnaced base64 encoding (JavaScript) and JSON file combining (forms).
+advantage of advanced base64 encoding (JavaScript) and JSON file combining (forms).
 
 ```
 definition-folder
@@ -41,14 +41,15 @@ your `code` folder the same as the step that they reside in, for example:
 ```json
 {
       "name": "loop",
+      "triggers": "check_loop",
       "description": "Loop until I say to stop",
+      "label": "Loop step - do something",
       "type": "task",
       "function": {
         "format": "base64",
         "code": "",
         "modules": ["lodash"]
-      },
-      "triggers": "check_loop"
+      }
 }
 ``` 
 
